@@ -1,0 +1,52 @@
+/* Fondo de cielo nocturno */
+body {
+  background: linear-gradient(to bottom, #1a202c, #0a0a0a, #000);
+  color: white;
+  background-attachment: fixed; /* Fija el fondo para evitar parpadeos */
+}
+
+h1 {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: bold;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* Estilos del menú */
+.menu {
+  padding: 16px;
+}
+
+.menu ul {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-button {
+  color: white;
+  padding: 12px 24px; /* Increased padding for a bigger button */
+  border-radius: 12px; /* Slightly larger border radius */
+  background-color: #3182ce;
+  text-decoration: none;
+  font-size: 1.125rem; /* Increased font size */
+  transition: background-color 0.3s ease;
+}
+
+.menu-button:hover {
+  background-color: #225388;
+}
+
+/* Estilos de las secciones */
+.section {
+  padding: 32px;
+}
+
+.section-title {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: bold;
+  margin-bottom: 16px;
+}

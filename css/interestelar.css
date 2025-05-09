@@ -1,0 +1,78 @@
+
+/* Contenedor principal */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* Estilo del formulario */
+form {
+  background-color: #2d3748;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  border: 1px solid #4a5568;
+  border-radius: 8px;
+  background-color: #1a202c;
+  color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input[type="text"]::placeholder,
+input[type="number"]::placeholder {
+  color: #a0aec0;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #3182ce;
+  color: white;
+  font-size: 1.125rem; /* text-lg */
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #225388;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  form {
+    padding: 24px;
+  }
+
+  h1 {
+    font-size: 1.5rem; /* text-2xl */
+  }
+
+  button {
+    font-size: 1rem; /* text-base */
+  }
+}
