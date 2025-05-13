@@ -35,27 +35,58 @@ const validaciones = (data) => {
 }
 
 
-const auxliar = (data,din,arr)=>{
-  for (let i = 0; i < din; i++) {
-    let x = Math.floor(Math.random() * data.dimensionesX);
-    let y = Math.floor(Math.random() * data.dimensionesY);
-    if((x==data.inicioX && y==data.inicioY) || (x==data.finalX && y==data.finalY)){
-      i--;
-      continue;
-    }
-    arr[i] = [x,y];
+
+const generarObstaculos = (data) => {
+  const posicionesUnicas = new Set();
+
+  const generarPosicionUnica = (data) => {
+    let x, y, key;
+    do {
+      x = Math.floor(Math.random() * data.dimensionesX);
+      y = Math.floor(Math.random() * data.dimensionesY);
+      key = `${x},${y}`;
+    } while (posicionesUnicas.has(key) || (x === data.inicioX && y === data.inicioY) || (x === data.finalX && y === data.finalY));
+    posicionesUnicas.add(key);
+    return [x, y];
+  };
+
+  const agujerosNegros = [];
+  const estrellasGigantes = [];
+  const agujerosGusano = [];
+  const portales = [];
+  const celdasEnergia = [];
+
+  for (let i = 0; i < data.agujerosNegros; i++) {
+    agujerosNegros.push(generarPosicionUnica(data));
   }
 
-  return arr
-}
+  for (let i = 0; i < data.estrellasGigantes; i++) {
+    estrellasGigantes.push(generarPosicionUnica(data));
+  }
+
+  for (let i = 0; i < data.agujerosGusano; i++) {
+    const inicio = generarPosicionUnica(data);
+    const fin = generarPosicionUnica(data);
+    agujerosGusano.push({ inicio, fin });
+  }
+
+  for (let i = 0; i < data.celdasEnergia; i++) {
+    celdasEnergia.push(generarPosicionUnica(data));
+  }
+
+  for (let i = 0; i < data.agujerosGusano; i++) {
+    const inicio = generarPosicionUnica(data);
+    const fin = generarPosicionUnica(data);
+    portales.push({ inicio, fin });
+  }
+
+  return { agujerosNegros, estrellasGigantes, agujerosGusano, portales, celdasEnergia };
+};
+
 
 
 const generarMapa = (data) =>{
   let mapa = [[]];
-  let agujerosNetros = [[]];
-  let estrellasGigantes = [[]];
-  let agujerosGusano = [];
-  let celdasEnergia = [[]];
   for (let i = 0; i < data.dimensionesX; i++) {
     mapa[i] = [];
     for (let j = 0; j < data.dimensionesY; j++) {
@@ -65,27 +96,19 @@ const generarMapa = (data) =>{
   mapa[data.inicioX][data.inicioY] = 0;
   mapa[data.finalX][data.finalY] = 0;
   
-  agujerosNetros = auxliar(data,data.agujerosNegros,agujerosNetros)
-  estrellasGigantes = auxliar(data,data.estrellasGigantes,estrellasGigantes)
-  celdasEnergia = auxliar(data,data.celdasEnergia,celdasEnergia)
+  agujerosNegros, estrellasGigantes, agujerosGusano, portales, celdasEnergia = generarObstaculos(data)
 
-    for (let i = 0; i < data.agujerosGusano; i++) {
-    let x_inicio = Math.floor(Math.random() * data.dimensionesX);
-    let y_inicio = Math.floor(Math.random() * data.dimensionesY);
-    let x_fin = Math.floor(Math.random() * data.dimensionesX);
-    let y_fin = Math.floor(Math.random() * data.dimensionesY);
-    if((x_inicio==data.inicioX && y_inicio==data.inicioY) || (x_inicio==data.finalX && y_inicio==data.finalY)){
-      i--;
-      continue;
-    }
-    agujerosGusano[i] = {inicio: [x_inicio, y_inicio], fin: [x_fin, y_fin]};
-  }
-
-  let backtraking = {
-    mapa: mapa,
-    agujerosNetros: agujerosNetros,
+  const backtraking = {
+    matrix: {filas: data.dimensionesX, columnas: data.dimensionesY},
+    origin: [data.inicioX, data.inicioY],
+    agujerosNegros: agujerosNegros,
     estrellasGigantes: estrellasGigantes,
+    portales: portales,
     agujerosGusano: agujerosGusano,
+    mapa: mapa,
+    
+    
+    
     celdasEnergia: celdasEnergia,
   }
 
