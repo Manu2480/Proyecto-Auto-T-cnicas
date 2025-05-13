@@ -122,10 +122,15 @@ const loadDataForm = () => {
   if(validaciones(inputMapa)){
     // Si las validaciones son correctas, genera el mapa
     let mapa = generarMapa(inputMapa);
-    const path = './data/mapa.json';
-    localStorage.setItem(path, JSON.stringify(mapa));
-    const dataSalva = localStorage.getItem(path);
-    console.log(dataSalva);
+    const blob = new Blob([JSON.stringify(mapa, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "mapa.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
     
   }
 };
