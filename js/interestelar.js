@@ -93,7 +93,7 @@ const generarMapa = (data) =>{
   mapa[data.inicioX][data.inicioY] = 0;
   mapa[data.finalX][data.finalY] = 0;
   
-  agujerosNegros, estrellasGigantes, agujerosGusano, celdasEnergia = generarObstaculos(data)
+  const { agujerosNegros, estrellasGigantes, agujerosGusano, celdasEnergia } = generarObstaculos(data);
 
   celdasEnergia.array.forEach(celda => {
     mapa[celda.poscion[0]][celda.poscion[1]] = 0;
