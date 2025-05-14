@@ -53,7 +53,6 @@ const generarObstaculos = (data) => {
   const agujerosNegros = [];
   const estrellasGigantes = [];
   const agujerosGusano = [];
-  const portales = [];
   const celdasEnergia = [];
 
   for (let i = 0; i < data.agujerosNegros; i++) {
@@ -71,16 +70,14 @@ const generarObstaculos = (data) => {
   }
 
   for (let i = 0; i < data.celdasEnergia; i++) {
-    celdasEnergia.push(generarPosicionUnica(data));
+    let obj = {
+      poscion: generarPosicionUnica(data),
+      recarga: Math.floor(Math.random() * 4) + 2,
+    }
+    celdasEnergia.push(obj);
   }
 
-  for (let i = 0; i < data.agujerosGusano; i++) {
-    const inicio = generarPosicionUnica(data);
-    const fin = generarPosicionUnica(data);
-    portales.push({ inicio, fin });
-  }
-
-  return { agujerosNegros, estrellasGigantes, agujerosGusano, portales, celdasEnergia };
+  return { agujerosNegros, estrellasGigantes, agujerosGusano, celdasEnergia };
 };
 
 
@@ -90,28 +87,39 @@ const generarMapa = (data) =>{
   for (let i = 0; i < data.dimensionesX; i++) {
     mapa[i] = [];
     for (let j = 0; j < data.dimensionesY; j++) {
-      mapa[i][j] = Math.floor(Math.random() * 11);;
+      mapa[i][j] = Math.floor(Math.random() * 10 ) + 1;
     }
   }
   mapa[data.inicioX][data.inicioY] = 0;
   mapa[data.finalX][data.finalY] = 0;
   
-  agujerosNegros, estrellasGigantes, agujerosGusano, portales, celdasEnergia = generarObstaculos(data)
+  agujerosNegros, estrellasGigantes, agujerosGusano, celdasEnergia = generarObstaculos(data)
+
+  celdasEnergia.array.forEach(celda => {
+    mapa[celda.poscion[0]][celda.poscion[1]] = 0;
+  });
 
   const backtraking = {
     matrix: {filas: data.dimensionesX, columnas: data.dimensionesY},
     origin: [data.inicioX, data.inicioY],
+    destino: [data.finalX, data.finalY],
     agujerosNegros: agujerosNegros,
     estrellasGigantes: estrellasGigantes,
-    portales: portales,
     agujerosGusano: agujerosGusano,
-    mapa: mapa,
-    
-    
-    
     celdasEnergia: celdasEnergia,
+    mapa: mapa,
   }
-
+/**
+ * {
+ * poscion: [x,y],
+ * cargaActual: int,
+ * agujerosNegros: [[x,y],...],
+ * estrellasGigantes: [[x,y],...],
+ * agujerosGusano: [{incio[x,y], destino:[x,y]},...],
+ * celdasEnergia: [{poscicion: [x,y], recarga: int},...],
+ * }
+ * 
+ */
   return backtraking
 }
 

@@ -1,0 +1,35 @@
+[
+    {
+        "name": "test",
+        "description": "test",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "test": {
+                    "type": "string",
+                    "description": "test"
+                }
+            },
+            "required": [
+                "test"
+            ]
+        }
+    }
+    ,
+    {
+        "name": "test2",
+        "description": "test2",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "test2": {
+                    "type": "string",
+                    "description": "test2"
+                }
+            },
+            "required": [
+                "test2"
+            ]
+        }
+    }
+]
