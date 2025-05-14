@@ -71,7 +71,7 @@ const generarObstaculos = (data) => {
 
   for (let i = 0; i < data.celdasEnergia; i++) {
     let obj = {
-      poscion: generarPosicionUnica(data),
+      posicion: generarPosicionUnica(data),
       recarga: Math.floor(Math.random() * 4) + 2,
     }
     celdasEnergia.push(obj);
@@ -96,7 +96,7 @@ const generarMapa = (data) =>{
   const { agujerosNegros, estrellasGigantes, agujerosGusano, celdasEnergia } = generarObstaculos(data);
 
   celdasEnergia.forEach(celda => {
-    mapa[celda.poscion[0]][celda.poscion[1]] = 0;
+    mapa[celda.posicion[0]][celda.posicion[1]] = 0;
   });
 
   const backtraking = {
