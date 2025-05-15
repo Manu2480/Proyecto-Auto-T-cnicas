@@ -29,6 +29,4 @@ const main = () => {
   });
 }
 
-console.log("Hola desde index.js");
-
 main();

@@ -62,6 +62,65 @@ button:hover {
   background-color: #225388;
 }
 
+.mapa {
+  width: 45%;
+  height: 400px;
+  margin-top: 16px;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+td {
+  background-color: #1a202c;
+  white-space: nowrap;
+  text-align: center;
+  height: 15px;
+  min-width: 15px;
+}
+
+
+.galaxy-bg-1 {
+  background: linear-gradient(135deg, #1a1a2e 0%, #3a1c71 50%, #5f2c82 100%);
+}
+
+.galaxy-bg-2 {
+  background: linear-gradient(120deg, #2d2d5b 0%, #7a4db3 60%, #b084ff 100%);
+}
+
+.galaxy-bg-3 {
+  background: linear-gradient(110deg, #232c47 0%, #4c6a8a 50%, #8aa8fb 100%);
+}
+
+.galaxy-bg-4 {
+  background: linear-gradient(140deg, #2b3a55 0%, #6d7b8c 60%, #4a5a6c 100%);
+}
+
+.galaxy-bg-5 {
+  background: linear-gradient(125deg, #4e207e 0%, #b48de2 50%, #7a40e0 100%);
+}
+
+.galaxy-bg-6 {
+  background: linear-gradient(130deg, #434546 0%, #717375 50%, #a8b0c3 100%);
+}
+
+.galaxy-bg-7 {
+  background: linear-gradient(115deg, #3e5c92 0%, #5a72b8 60%, #9dd5ed 100%);
+}
+
+.galaxy-bg-8 {
+  background: linear-gradient(145deg, #40005c 0%, #e5d4f4 100%);
+}
+
+.galaxy-bg-9 {
+  background: linear-gradient(120deg, #3f4067 0%, #6c83a4 50%, #ffba80 100%);
+}
+
+.galaxy-bg-10 {
+  background: linear-gradient(135deg, #3a59a0 0%, #7ee0ee 100%);
+}
+
+
 /* Responsividad */
 @media (max-width: 768px) {
   form {

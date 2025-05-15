@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/interestelar.css" />
   </head>
 
-  <main>
+  <main id="interstellarForm">
     <form>
       <h1>Configuración del Mapa Interestelar</h1>
       <label for="dimensionesX">Dimensión X del mapa (mínimo 30):</label>
@@ -119,8 +119,19 @@
         required
       />
       <br /><br />
-
-      <button id="generarMapa" type="button">Generar Mapa</button>
+      <label for="energiaInicial">Eenrgia Inicial (mínimo 50)</label>
+      <input
+        type="number"
+        id="energiaInicial"
+        name="energiaInicial"
+        min="30"
+        required
+      />
+      <br /><br />
+      <div>
+              <button id="generarMapa" type="button" style="margin-bottom: 10px;">Generar Mapa</button>
+              <button id="cargarMapa" type="button" style="margin-top: 10px;">Cargar Mapa</button>
+      </div>
     </form>
   </main>
 </html>
