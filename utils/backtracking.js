@@ -1,19 +1,19 @@
-// Guardamos aquí los datos del archivo JSON que sube el usuario
-let datos;
+// // Guardamos aquí los datos del archivo JSON que sube el usuario
+// let datos;
 
-// Esperamos a que el usuario cargue un archivo .json
-document.getElementById('fileInput').addEventListener('change', function (e) {
-  const file = e.target.files[0];
-  const reader = new FileReader();
-  reader.onload = function (event) {
-    datos = JSON.parse(event.target.result); // Convertimos el contenido del archivo a un objeto de JavaScript
-    console.log("✅ Archivo cargado.");
-  };
-  reader.readAsText(file); // Leemos el contenido del archivo como texto
-});
+// // Esperamos a que el usuario cargue un archivo .json
+// document.getElementById('fileInput').addEventListener('change', function (e) {
+//   const file = e.target.files[0];
+//   const reader = new FileReader();
+//   reader.onload = function (event) {
+//     datos = JSON.parse(event.target.result); // Convertimos el contenido del archivo a un objeto de JavaScript
+//     console.log("✅ Archivo cargado.");
+//   };
+//   reader.readAsText(file); // Leemos el contenido del archivo como texto
+// });
 
-// Cuando se hace clic en el botón, se llama a esta función
-document.getElementById('iniciarBtn').addEventListener('click', iniciarBusqueda);
+// // Cuando se hace clic en el botón, se llama a esta función
+// document.getElementById('iniciarBtn').addEventListener('click', iniciarBusqueda);
 
 // Verifica si una posición está dentro de los límites del mapa
 function dentroDelMapa(x, y, mapa) {
@@ -182,7 +182,7 @@ function guardarResultado(historial, exito) {
 }
 
 // Inicia todo el proceso de búsqueda cuando el usuario hace clic en el botón
-function iniciarBusqueda() {
+export function iniciarBusqueda(datos) {
   if (!datos) {
     alert("Primero carga un archivo .json con el mapa.");
     return;
@@ -212,4 +212,5 @@ function iniciarBusqueda() {
   } else {
     console.log("❌ No se encontró un camino posible. Se descargó historial parcial.");
   }
+  return resultado;
 }

@@ -1,3 +1,5 @@
+import { iniciarBusqueda } from "../utils/backtracking.js";
+
 const validaciones = (data) => {
   // Validaciones de los datos del formulario
   const {
@@ -91,22 +93,25 @@ const generarObstaculos = (data) => {
   const celdasEnergia = [];
 
   for (let i = 0; i < data.agujerosNegros; i++) {
-    agujerosNegros.push(generarPosicionUnica(data));
+    let posicion = generarPosicionUnica(data);
+    agujerosNegros.push({x:posicion[1], y:posicion[0]});
   }
 
   for (let i = 0; i < data.estrellasGigantes; i++) {
-    estrellasGigantes.push(generarPosicionUnica(data));
+    let posicion = generarPosicionUnica(data);
+    estrellasGigantes.push({ x:posicion[1], y:posicion[0] });
   }
 
   for (let i = 0; i < data.agujerosGusano; i++) {
     const inicio = generarPosicionUnica(data);
     const fin = generarPosicionUnica(data);
-    agujerosGusano.push({ inicio, fin });
+    agujerosGusano.push({ origen:{x:inicio[1], y:inicio[0]}, destino:{x:fin[1], y:fin[0]} });
   }
 
   for (let i = 0; i < data.celdasEnergia; i++) {
+    let posicion = generarPosicionUnica(data);
     let obj = {
-      posicion: generarPosicionUnica(data),
+      posicion: { x: posicion[1], y: posicion[0] },
       recarga: Math.floor(Math.random() * 4) + 2,
     };
     celdasEnergia.push(obj);
@@ -117,9 +122,9 @@ const generarObstaculos = (data) => {
 
 const generarMapa = (data) => {
   let mapa = [[]];
-  for (let i = 0; i < data.dimensionesX; i++) {
+  for (let i = 0; i < data.dimensionesY; i++) {
     mapa[i] = [];
-    for (let j = 0; j < data.dimensionesY; j++) {
+    for (let j = 0; j < data.dimensionesX; j++) {
       mapa[i][j] = Math.floor(Math.random() * 10) + 1;
     }
   }
@@ -128,52 +133,27 @@ const generarMapa = (data) => {
 
   const { agujerosNegros, estrellasGigantes, agujerosGusano, celdasEnergia } =
     generarObstaculos(data);
-
+  
   celdasEnergia.forEach((celda) => {
-    mapa[celda.posicion[0]][celda.posicion[1]] = 0;
+    mapa[celda.posicion.y][celda.posicion.x] = 0;
   });
 
   const backtraking = {
-    matrix: { filas: data.dimensionesX, columnas: data.dimensionesY },
-    origin: [data.inicioX, data.inicioY],
-    destino: [data.finalX, data.finalY],
-    agujerosNegros: agujerosNegros,
-    estrellasGigantes: estrellasGigantes,
-    agujerosGusano: agujerosGusano,
-    celdasEnergia: celdasEnergia,
     mapa: mapa,
+    elementos: {
+      agujerosNegros: agujerosNegros,
+      agujerosGusano: agujerosGusano,
+      estrellas: estrellasGigantes,
+      zonasRecarga: celdasEnergia,
+    },
+    origen: { x: data.inicioX, y: data.inicioY },
+    destino: { x: data.finalX, y: data.finalY },
+    energiaInicial: data.energiaInicial,
   };
-  /**
-   * {
-   * poscion: [x,y],
-   * cargaActual: int,
-   * agujerosNegros: [[x,y],...],
-   * estrellasGigantes: [[x,y],...],
-   * agujerosGusano: [{incio[x,y], destino:[x,y]},...],
-   * celdasEnergia: [{poscicion: [x,y], recarga: int},...],
-   * }
-   *
-   */
   return backtraking;
 };
 
 const mostrarMapa = (data) => {
-  /**
-   *   const inputMapa = {
-    dimensionesX: parseInt(dimensionesX),
-    dimensionesY: parseInt(dimensionesY),
-    inicioX: parseInt(inicioX),
-    inicioY: parseInt(inicioY),
-    finalX: parseInt(finalX),
-    finalY: parseInt(finalY),
-    agujerosNegros: parseInt(agujerosNegros),
-    estrellasGigantes: parseInt(estrellasGigantes),
-    agujerosGusano: parseInt(agujerosGusano),
-    celdasEnergia: parseInt(celdasEnergia),
-    energiaInicial: parseInt(enegiaInical),
-  };
-   */
-  // Cambia "interstellarForm" por el id real del contenedor donde quieres mostrar el mapa, por ejemplo "mapaContainer"
   const contenedor = document.getElementById("interstellarForm");
   if (!contenedor) {
     console.error('No se encontró el contenedor con id "mapaContainer".');
@@ -181,59 +161,142 @@ const mostrarMapa = (data) => {
   }
   contenedor.innerHTML = '<table id="mapa" class="mapa"></table>'; // Limpia el contenedor
   const tabla = document.querySelector("#mapa");
-  console.log("algo");
-  
   console.log(data);
   
-  for (let i = 0; i < data.matrix.filas; i++) {
-    console.log("algo2");
-    
+  for (let i = 0; i < data.mapa.length; i++) {
     const fila = document.createElement("tr");
-    for (let j = 0; j < data.matrix.columnas; j++) {
+    for (let j = 0; j < data.mapa[0].length; j++) {
       const celda = document.createElement("td");
       let caracter = data.mapa[i][j];
       celda.classList.add(`galaxy-bg-${data.mapa[i][j]}`);
-      if (i === data.origin[1] && j === data.origin[0]) {
+      if (i === data.origen.y && j === data.origen.x) {
         caracter = "🚀";
       }
-      if (i === data.destino[1] && j === data.destino[0]) {
+      if (i === data.destino.y && j === data.destino.x) {
         caracter = "🏁";
       }
-      data.agujerosNegros.forEach((element) => {
-        if (i === element[1] && j === element[0]) {
+      
+      let elementos = data.elementos;      
+      elementos.agujerosNegros.forEach((element) => {
+        if (i === element.y && j === element.x) {
           caracter = "⚫";
         }
       });
-      data.estrellasGigantes.forEach((element) => {
-        if (i === element[1] && j === element[0]) {
+      elementos.estrellas.forEach((element) => {
+        if (i === element.y && j === element.x) {
           caracter = "🌟";
         }
       });
-      data.agujerosGusano.forEach((element) => {
-        console.log(element);
-        
-        if ((i === element.inicio[1] && j === element.inicio[0]) || (i === element.fin[1] && j === element.fin[0])) {
+      elementos.agujerosGusano.forEach((element) => {        
+        if (
+          (i === element.origen.y && j === element.origen.x) ||
+          (i === element.destino.y && j === element.destino.x)
+        ) {
           caracter = "🕳️";
         }
       });
-      data.celdasEnergia.forEach((element) => {
-        if (i === element.posicion[1] && j === element.posicion[0]) {
+      elementos.zonasRecarga.forEach((element) => {
+        if (i === element.posicion.y && j === element.posicion.x) {
           caracter = "⚡";
         }
       });
       celda.textContent = caracter;
-      console.log(celda);
-      
+
       fila.appendChild(celda);
     }
-    console.log(fila);
-    
+
     tabla.appendChild(fila);
   }
 };
 
+const actualizarMapa = (move) => {
+  const tabla = document.querySelector("#mapa");
+  const celda = tabla.rows[move.posicion.y].cells[move.posicion.x];
+  celda.classList.add("visited");
+  celda.textContent = "🚀";
 
+  // Actualiza las celdas visitadas
+  move.visitados.forEach((pos) => {
+    const celdaVisitada = tabla.rows[pos.y].cells[pos.x];
+    celdaVisitada.classList.add("visited");
+    celdaVisitada.textContent = "✅";
+  });
 
+  // Actualiza los agujeros negros
+  if (move.agujerosNegros) {
+    move.agujerosNegros.forEach((agujero) => {
+      if (agujero && agujero.length >= 2) {
+        const celdaAgujero = tabla.rows[agujero[1]].cells[agujero[0]];
+        celdaAgujero.textContent = "⚫";
+      }
+    });
+  }
+
+  // Actualiza los agujeros de gusano
+  if (move.agujerosGusano) {
+    move.agujerosGusano.forEach((gusano) => {
+      if (gusano.origen) {
+        const celdaOrigen = tabla.rows[gusano.origen[1]].cells[gusano.origen[0]];
+        celdaOrigen.textContent = "🕳️";
+      }
+      if (gusano.destino) {
+        const celdaDestino = tabla.rows[gusano.destino[1]].cells[gusano.destino[0]];
+        celdaDestino.textContent = "🕳️";
+      }
+    });
+  }
+
+  // Actualiza las estrellas
+  if (move.estrellas) {
+    move.estrellas.forEach((estrella) => {
+      if (estrella && estrella.length >= 2) {
+        const celdaEstrella = tabla.rows[estrella[1]].cells[estrella[0]];
+        celdaEstrella.textContent = "🌟";
+      }
+    });
+  }
+
+  // Si hay un evento especial, muestra un indicador
+  if (move.evento && move.evento !== "normal") {
+    const mensaje = document.createElement("div");
+    mensaje.classList.add("evento-mensaje");
+    switch (move.evento) {
+      case "recarga":
+        mensaje.textContent = `⚡ Energía recargada: ${move.energia}`;
+        break;
+      case "portal":
+        mensaje.textContent = "🕳️ Teletransporte activado";
+        break;
+      case "estrella":
+        mensaje.textContent = "🌟 Campo gravitacional alterado";
+        break;
+    }
+    tabla.parentElement.appendChild(mensaje);
+    setTimeout(() => mensaje.remove(), 2000);
+  }
+};
+
+const backtracking = (data) => { 
+  let historial = []; 
+  const result = iniciarBusqueda(
+    data
+  );
+  console.log(result);
+  
+  if (!result) {
+    alert(
+      "❌ No se encontró un camino posible"
+    );
+    return;
+  }
+  for (let i = 0; i < result.historial.length; i++) {
+    setTimeout(() => {
+      const move = result.historial[i];
+      actualizarMapa(move);
+    }, i * 250);
+  }
+  
+};
 
 const loadDataForm = () => {
   // Captura los datos del formulario
@@ -277,7 +340,7 @@ const loadDataForm = () => {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    
+    backtracking(mapa);
   }
 };
 
@@ -309,6 +372,7 @@ export const interestelar = () => {
         reader.onload = (e) => {
           const data = JSON.parse(e.target.result);
           mostrarMapa(data);
+          backtracking(data);
         };
         reader.readAsText(file);
       };
