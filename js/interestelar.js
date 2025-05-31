@@ -281,7 +281,6 @@ const backtracking = (data) => {
   const result = iniciarBusqueda(
     data
   );
-  console.log(result);
   
   if (!result) {
     alert(
@@ -302,10 +301,21 @@ const loadDataForm = () => {
   // Captura los datos del formulario
   const dimensionesX = document.getElementById("dimensionesX").value;
   const dimensionesY = document.getElementById("dimensionesY").value;
-  const inicioX = document.getElementById("inicioX").value;
-  const inicioY = document.getElementById("inicioY").value;
-  const finalX = document.getElementById("finX").value;
-  const finalY = document.getElementById("finY").value;
+  const inicioX = 0
+  const inicioY = 0
+  const select = document.getElementById("posicionFinal").value;
+  console.log(select);
+  let finalX, finalY;
+  if (select == 0){
+    finalX = dimensionesX - 1;
+    finalY =  0;
+  }else if (select == 1){
+    finalX = dimensionesX - 1;
+    finalY = dimensionesY - 1;
+  }else if (select == 2){
+    finalX = 0;
+    finalY = dimensionesY - 1;
+  }
   const agujerosNegros = document.getElementById("agujerosNegros").value;
   const estrellasGigantes = document.getElementById("estrellasGigantes").value;
   const agujerosGusano = document.getElementById("agujerosGusano").value;

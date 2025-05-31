@@ -93,10 +93,10 @@ function buscarCamino(x, y, destinoX, destinoY, energia, visitados, historial, e
 
   // Posibles direcciones para moverse (arriba, derecha, abajo, izquierda)
   const direcciones = [
-    { dx: 0, dy: -1, nombre: "arriba" },
     { dx: 1, dy: 0, nombre: "derecha" },
     { dx: 0, dy: 1, nombre: "abajo" },
-    { dx: -1, dy: 0, nombre: "izquierda" }
+    { dx: -1, dy: 0, nombre: "izquierda" },
+    { dx: 0, dy: -1, nombre: "arriba" },
   ];
 
   for (let dir of direcciones) {

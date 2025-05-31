@@ -45,6 +45,54 @@ input[type="number"]::placeholder {
   color: #a0aec0;
 }
 
+
+/* Estilos para select */
+.selectForm {
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  border: 1px solid #4a5568;
+  border-radius: 8px;
+  background-color: #1a202c;
+  color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
+  cursor: pointer;
+  appearance: none; /* Elimina el estilo predeterminado del navegador */
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+.selectForm:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+}
+
+.selectForm:hover {
+  border-color: #63b3ed;
+}
+
+/* Estilos para las opciones del select */
+.selectForm option {
+  background-color: #1a202c;
+  color: white;
+  padding: 10px;
+}
+
+.selectForm option:hover {
+  background-color: #2d3748;
+}
+
+/* Para navegadores WebKit (Chrome, Safari) */
+.selectForm option:checked {
+  background-color: #3182ce;
+  color: white;
+}
+
 button {
   width: 100%;
   padding: 12px;
