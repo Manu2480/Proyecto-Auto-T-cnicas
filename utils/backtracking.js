@@ -198,7 +198,9 @@ function iniciarBusqueda() {
     origen.x, origen.y,
     destino.x, destino.y,
     energiaInicial,
-    [origen],
+    [
+      
+    ],
     [],
     JSON.parse(JSON.stringify(elementos)),
     mapa
