@@ -45,6 +45,54 @@ input[type="number"]::placeholder {
   color: #a0aec0;
 }
 
+
+/* Estilos para select */
+.selectForm {
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  border: 1px solid #4a5568;
+  border-radius: 8px;
+  background-color: #1a202c;
+  color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
+  cursor: pointer;
+  appearance: none; /* Elimina el estilo predeterminado del navegador */
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+.selectForm:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+}
+
+.selectForm:hover {
+  border-color: #63b3ed;
+}
+
+/* Estilos para las opciones del select */
+.selectForm option {
+  background-color: #1a202c;
+  color: white;
+  padding: 10px;
+}
+
+.selectForm option:hover {
+  background-color: #2d3748;
+}
+
+/* Para navegadores WebKit (Chrome, Safari) */
+.selectForm option:checked {
+  background-color: #3182ce;
+  color: white;
+}
+
 button {
   width: 100%;
   padding: 12px;
@@ -61,6 +109,65 @@ button {
 button:hover {
   background-color: #225388;
 }
+
+.mapa {
+  width: 45%;
+  height: 400px;
+  margin-top: 16px;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+td {
+  background-color: #1a202c;
+  white-space: nowrap;
+  text-align: center;
+  height: 15px;
+  min-width: 15px;
+}
+
+
+.galaxy-bg-1 {
+  background: linear-gradient(135deg, #1a1a2e 0%, #3a1c71 50%, #5f2c82 100%);
+}
+
+.galaxy-bg-2 {
+  background: linear-gradient(120deg, #2d2d5b 0%, #7a4db3 60%, #b084ff 100%);
+}
+
+.galaxy-bg-3 {
+  background: linear-gradient(110deg, #232c47 0%, #4c6a8a 50%, #8aa8fb 100%);
+}
+
+.galaxy-bg-4 {
+  background: linear-gradient(140deg, #2b3a55 0%, #6d7b8c 60%, #4a5a6c 100%);
+}
+
+.galaxy-bg-5 {
+  background: linear-gradient(125deg, #4e207e 0%, #b48de2 50%, #7a40e0 100%);
+}
+
+.galaxy-bg-6 {
+  background: linear-gradient(130deg, #434546 0%, #717375 50%, #a8b0c3 100%);
+}
+
+.galaxy-bg-7 {
+  background: linear-gradient(115deg, #3e5c92 0%, #5a72b8 60%, #9dd5ed 100%);
+}
+
+.galaxy-bg-8 {
+  background: linear-gradient(145deg, #40005c 0%, #e5d4f4 100%);
+}
+
+.galaxy-bg-9 {
+  background: linear-gradient(120deg, #3f4067 0%, #6c83a4 50%, #ffba80 100%);
+}
+
+.galaxy-bg-10 {
+  background: linear-gradient(135deg, #3a59a0 0%, #7ee0ee 100%);
+}
+
 
 /* Responsividad */
 @media (max-width: 768px) {

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/interestelar.css" />
   </head>
 
-  <main>
+  <main id="interstellarForm">
     <form>
       <h1>Configuración del Mapa Interestelar</h1>
       <label for="dimensionesX">Dimensión X del mapa (mínimo 30):</label>
@@ -32,48 +32,13 @@
       />
       <br /><br />
 
-      <label for="inicioX">Pocision inicio X:</label>
-      <input
-        type="number"
-        id="inicioX"
-        name="inicioX"
-        min="0"
-        placeholder="Ejemplo: 0"
-        required
-      />
-      <br /><br />
-
-      <label for="inicioY">Pocision inicio Y del mapa:</label>
-      <input
-        type="number"
-        id="inicioY"
-        name="inicioY"
-        min="0"
-        placeholder="Ejemplo: 0"
-        required
-      />
-      <br /><br />
-
-      <label for="finX">Pocision final X del mapa:</label>
-      <input
-        type="number"
-        id="finX"
-        name="finX"
-        min="1"
-        placeholder="Ejemplo: 29"
-        required
-      />
-      <br /><br />
-
-      <label for="finY">Pocision final Y del mapa:</label>
-      <input
-        type="number"
-        id="finY"
-        name="finY"
-        min="1"
-        placeholder="Ejemplo: 29"
-        required
-      />
+      <label for="posicionFinal">Posición final del mapa:</label>
+      <select id="posicionFinal" name="posicionFinal" class="selectForm" required>
+        <option value="">Seleccione una opción</option>
+        <option value="0">Derecha arriba</option>
+        <option value="1">Derecha abajo</option>
+        <option value="2">Izquierda abajo</option>
+      </select>
       <br /><br />
 
       <label for="agujerosNegros">Total de agujeros negros (mínimo 6):</label>
@@ -119,8 +84,19 @@
         required
       />
       <br /><br />
-
-      <button id="generarMapa" type="button">Generar Mapa</button>
+      <label for="energiaInicial">Eenrgia Inicial (mínimo 1000)</label>
+      <input
+        type="number"
+        id="energiaInicial"
+        name="energiaInicial"
+        min="1000"
+        required
+      />
+      <br /><br />
+      <div>
+              <button id="generarMapa" type="button" style="margin-bottom: 10px;">Generar Mapa</button>
+              <button id="cargarMapa" type="button" style="margin-top: 10px;">Cargar Mapa</button>
+      </div>
     </form>
   </main>
 </html>
