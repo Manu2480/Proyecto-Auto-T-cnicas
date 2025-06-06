@@ -1,50 +1,66 @@
-<!DOCTYPE html> <!-- Declaración del tipo de documento HTML5 -->
-<html lang="es"> <!-- Etiqueta raíz del documento, idioma español -->
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <!-- Meta información que no se muestra en la página pero es importante para el navegador -->
-  <meta charset="UTF-8" /> <!-- Codificación de caracteres UTF-8 para soportar acentos y caracteres especiales -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <!-- Configuración para diseño responsive en dispositivos móviles -->
-  <title>Validador de IP</title> <!-- Título que aparece en la pestaña del navegador -->
-  <link rel="stylesheet" href="../css/automataIp.css" /> <!-- Enlace al archivo CSS externo para los estilos -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Validador de IP</title>
+  <link rel="stylesheet" href="../css/automataIp.css" />
 </head>
 <body>
-  <!-- Contenedor principal de la aplicación -->
   <div class="container">
-    <h1>Validador de IP</h1> <!-- Título principal visible en la página -->
+    <h1>Validador de IP</h1>
     
-    <!-- Campo de entrada de texto donde el usuario escribirá la IP -->
+    <!-- Opción 1: Entrada de texto individual -->
     <input type="text" id="ipInput" placeholder="Ingresa una dirección IP (ej: 192.168.1.1)" />
-    
-    <!-- Botón que ejecuta la función validar() cuando se hace clic -->
-    <button onclick="validar()">Validar</button>
-    
-    <!-- Div vacío donde se mostrará el resultado de la validación -->
+    <button onclick="validar()">Validar una IP</button>
+
+    <hr/>
+
+    <!-- Opción 2: Subir archivo .txt con varias IPs -->
+    <input type="file" id="fileInput" accept=".txt" />
+    <button onclick="validarArchivo()">Validar archivo</button>
+
     <div id="resultado"></div>
   </div>
 
-  <!-- Script JavaScript con tipo módulo para poder usar import/export -->
   <script type="module">
-    // Importa la función validarIp desde el archivo automataip.js
     import { validarIp } from '../utils/automataip.js';
 
-    // Define la función validar en el objeto window para hacerla accesible globalmente
     window.validar = function () {
-      // Obtiene el valor del input, eliminando espacios en blanco al inicio y final
       const ip = document.getElementById('ipInput').value.trim();
-      
-      // Obtiene la referencia al div donde se mostrará el resultado
       const resultado = document.getElementById('resultado');
-      
-      // Llama a la función de validación importada y guarda el resultado
       const res = validarIp(ip);
-      
-      // Muestra el mensaje de resultado en el div
       resultado.textContent = res.message;
-      
-      // Asigna la clase CSS según el estado: 'valido' (verde) o 'invalido' (rojo)
       resultado.className = res.estado ? 'valido' : 'invalido';
     };
-    
+
+    window.validarArchivo = function () {
+      const fileInput = document.getElementById('fileInput');
+      const resultado = document.getElementById('resultado');
+      resultado.innerHTML = ''; // Limpiar resultados anteriores
+
+      const file = fileInput.files[0];
+      if (!file) {
+        resultado.textContent = "Por favor selecciona un archivo .txt.";
+        resultado.className = 'invalido';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const contenido = e.target.result;
+        const lineas = contenido.split(/\r?\n/);
+        const resultadosHTML = lineas.map((linea, index) => {
+          const ip = linea.trim();
+          if (!ip) return ''; // Saltar líneas vacías
+          const res = validarIp(ip);
+          return `<p><strong>Línea ${index + 1}</strong> (${ip}): <span class="${res.estado ? 'valido' : 'invalido'}">${res.message}</span></p>`;
+        }).join('');
+        resultado.innerHTML = resultadosHTML;
+      };
+
+      reader.readAsText(file);
+    };
   </script>
 </body>
 </html>
