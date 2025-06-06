@@ -1,3 +1,20 @@
+/**
+ * Autómata Finito para Validación de Códigos
+ * 
+ * Σ (Alfabeto): {# (dígitos 0-9), A (letras a-z, A-Z), - (guión)}
+ * 
+ * Q (Conjunto de Estados): {Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13}
+ * 
+ * q₀ (Estado Inicial): Q0
+ * 
+ * F (Estados de Aceptación): {Q13}
+ * 
+ * δ (Función de Transición): Definida por la matriz de transición
+ *   - Valida códigos con formato: ####-##-#### (año-letras-número)
+ *   - Q1 es el estado de error/rechazo
+ *   - Controla que el año sea válido (19xx en adelante)
+ */
+
 export function validarCodigo(cod){
     // # Numero, A Letra, - Guion
     let estado = "Q0"; // estado oficial

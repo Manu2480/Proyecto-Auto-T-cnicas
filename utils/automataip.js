@@ -1,3 +1,23 @@
+/**
+ * Autómata Finito para Validación de Direcciones IP
+ * 
+ * Σ (Alfabeto): {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, .}
+ * 
+ * Q (Conjunto de Estados): {Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14}
+ * 
+ * q₀ (Estado Inicial): Q0
+ * 
+ * F (Estados de Aceptación): 
+ *   - Para partes intermedias (validarIpAux): {Q14}
+ *   - Para parte final (validarIpFinal): {Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13}
+ * 
+ * δ (Función de Transición): Definida por las matrices de transición en cada función
+ *   - Valida números de 0-255 para cada octeto de la dirección IP
+ *   - Q1 es el estado de error/rechazo
+ *   - Controla que no haya ceros a la izquierda (excepto para el número 0)
+ */
+
+
 function validarIp(ip){
     if (typeof ip !== 'string') {
         return {estado:false, message: "La IP debe ser una cadena de texto"};
