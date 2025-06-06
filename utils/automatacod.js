@@ -15,6 +15,46 @@
  *   - Controla que el año sea válido (19xx en adelante)
  */
 
+
+export async function validarCodigosDesdeArchivo(file) {
+    return await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const lines = event.target.result.split(/\r?\n/);
+            const errores = [];
+            let lineNumber = 1;
+            for (const line of lines) {
+                const cadena = line.trim();
+                if (cadena.length === 0) {
+                    lineNumber++;
+                    continue;
+                }
+                const status = validarCodigo(cadena);
+                if (!status.estado) {
+                    errores.push({
+                        linea: lineNumber,
+                        cadena,
+                        status
+                    });
+                }
+                lineNumber++;
+            }
+            if (errores.length === 0) {
+                resolve({
+                    mensaje: "todas las cadenas cumplen con las reglas del código"
+                });
+            } else {
+                resolve(errores);
+            }
+        };
+        reader.onerror = function(err) {
+            reject(err);
+        };
+        reader.readAsText(file);
+    });
+}
+
+
 export function validarCodigo(cod){
     // # Numero, A Letra, - Guion
     let estado = "Q0"; // estado oficial

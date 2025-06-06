@@ -18,7 +18,51 @@
  */
 
 
-function validarIp(ip){
+/**
+ * Procesa un archivo de texto línea por línea y valida cada línea como dirección IP.
+ * @param {string} filePath - Ruta al archivo .txt
+ * @returns {Promise<void>}
+ */
+export async function validarIpsDesdeArchivo(file) {
+    return await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const lines = event.target.result.split(/\r?\n/);
+            const errores = [];
+            let lineNumber = 1;
+            for (const line of lines) {
+                const cadena = line.trim();
+                if (cadena.length === 0) {
+                    lineNumber++;
+                    continue;
+                }
+                const status = validarIp(cadena);
+                if (!status.estado) {
+                    errores.push({
+                        linea: lineNumber,
+                        cadena,
+                        status
+                    });
+                }
+                lineNumber++;
+            }
+            if (errores.length === 0) {
+                resolve({
+                    mensaje: "todas las cadenas estan cunpliendo con las reglas de la IP"
+                });
+            } else {
+                resolve(errores);
+            }
+        };
+        reader.onerror = function(err) {
+            reject(err);
+        };
+        reader.readAsText(file);
+    });
+}
+
+
+export function validarIp(ip){
     if (typeof ip !== 'string') {
         return {estado:false, message: "La IP debe ser una cadena de texto"};
     }
@@ -154,6 +198,3 @@ function validarIpFinal(parte){
     return retorno;
 
 }
-
-//se exporto la función para poder llamarla desde otros archivos
-export { validarIp };
