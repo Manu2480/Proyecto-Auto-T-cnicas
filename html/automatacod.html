@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Validador de Códigos</title>
+  <link rel="stylesheet" href="../css/automatas.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Validador de Códigos</h1>
+    
+    <!-- Entrada individual -->
+    <input type="text" id="codigoInput" placeholder="Ingresa un código (ej: 1923-cd-0484)" />
+    <button onclick="validar()">Validar un código</button>
+
+    <hr/>
+
+    <!-- Subir archivo -->
+    <input type="file" id="fileInput" accept=".txt" />
+    <button onclick="validarArchivo()">Validar archivo</button>
+
+    <div id="resultado"></div>
+  </div>
+
+  <script type="module">
+    import { validarCodigo, validarCodigosDesdeArchivo } from '../utils/automatacod.js';
+
+    window.validar = function () {
+      const cod = document.getElementById('codigoInput').value.trim();
+      const resultado = document.getElementById('resultado');
+      const res = validarCodigo(cod);
+      resultado.textContent = res.message;
+      resultado.className = res.estado ? 'valido' : 'invalido';
+    };
+
+    window.validarArchivo = async function () {
+      const fileInput = document.getElementById('fileInput');
+      const resultado = document.getElementById('resultado');
+      resultado.innerHTML = '';
+
+      const file = fileInput.files[0];
+      if (!file) {
+        resultado.textContent = "Por favor selecciona un archivo .txt.";
+        resultado.className = 'invalido';
+        return;
+      }
+
+      const res = await validarCodigosDesdeArchivo(file);
+
+      const resultadosHTML = res.map(item =>
+        `<p><strong>Línea ${item.linea}</strong> (${item.cadena}): 
+         <span class="${item.status.estado ? 'valido' : 'invalido'}">${item.status.message}</span></p>`
+      ).join('');
+
+      resultado.innerHTML = resultadosHTML;
+    };
+  </script>
+</body>
+</html>
